@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit dependencies
+        run: npm audit
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Test Copilot worker
+        run: npm run test --workspace @jobseek/copilot-worker
+
+      - name: Test extension
+        run: npm run test --workspace @jobseek/extension -- --maxWorkers=1
+
+      - name: Test companion
+        run: dotnet test .\companion\JobSeek.sln
+
+      - name: Test PowerShell helpers
+        shell: pwsh
+        run: .\scripts\tests\Invoke-ScriptTests.ps1
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium
+
+      - name: Run extension end-to-end tests
+        run: npm run test:e2e
+
+      - name: Build production extension
+        run: npm run build --workspace @jobseek/extension
+
+      - name: Audit release artifacts
+        shell: pwsh
+        run: .\scripts\check-release.ps1

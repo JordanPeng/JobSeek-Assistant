@@ -1,0 +1,870 @@
+{
+  "valid": [
+    {
+      "name": "health.get",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000001",
+        "operation": "health.get",
+        "payload": {}
+      }
+    },
+    {
+      "name": "profile.get",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000002",
+        "operation": "profile.get",
+        "payload": {}
+      }
+    },
+    {
+      "name": "profile.update with structured fact value",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000003",
+        "operation": "profile.update",
+        "payload": {
+          "facts": [
+            {
+              "path": "contact.email",
+              "value": "fake@example.test",
+              "sensitivity": "ordinary",
+              "fillPolicy": "autofill",
+              "source": "test",
+              "confirmed": true
+            },
+            {
+              "path": "links.other",
+              "value": {
+                "url": "https://example.test"
+              },
+              "sensitivity": "manual",
+              "fillPolicy": "suggest",
+              "source": "test",
+              "confirmed": false
+            }
+          ],
+          "source": "test",
+          "changeSummary": "seed"
+        }
+      }
+    },
+    {
+      "name": "profile.history with version",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000004",
+        "operation": "profile.history",
+        "payload": {
+          "version": 2
+        }
+      }
+    },
+    {
+      "name": "profile.history empty",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000005",
+        "operation": "profile.history",
+        "payload": {}
+      }
+    },
+    {
+      "name": "answers.list",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000006",
+        "operation": "answers.list",
+        "payload": {
+          "activeOnly": false
+        }
+      }
+    },
+    {
+      "name": "answers.confirm with null scopeValue",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000007",
+        "operation": "answers.confirm",
+        "payload": {
+          "rawQuestion": "Do you consent?",
+          "fieldType": "radio",
+          "options": ["Yes", "No"],
+          "answer": "Yes",
+          "scopeType": "global",
+          "scopeValue": null,
+          "sensitivity": "ordinary",
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "answers.update",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000008",
+        "operation": "answers.update",
+        "payload": {
+          "id": "20000000-0000-4000-8000-000000000001",
+          "answer": {
+            "structured": [1, 2, 3]
+          },
+          "active": false,
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "documents.list",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000009",
+        "operation": "documents.list",
+        "payload": {}
+      }
+    },
+    {
+      "name": "documents.import.start",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-00000000000a",
+        "operation": "documents.import.start",
+        "payload": {
+          "displayName": "resume.pdf",
+          "mimeType": "application/pdf",
+          "sizeBytes": 1024,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      }
+    },
+    {
+      "name": "documents.import.chunk",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-00000000000b",
+        "operation": "documents.import.chunk",
+        "payload": {
+          "sessionId": "20000000-0000-4000-8000-000000000002",
+          "index": 0,
+          "dataBase64": "QUJD"
+        }
+      }
+    },
+    {
+      "name": "documents.import.finish",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-00000000000c",
+        "operation": "documents.import.finish",
+        "payload": {
+          "sessionId": "20000000-0000-4000-8000-000000000003"
+        }
+      }
+    },
+    {
+      "name": "documents.read.start",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-00000000000d",
+        "operation": "documents.read.start",
+        "payload": {
+          "documentId": "20000000-0000-4000-8000-000000000004"
+        }
+      }
+    },
+    {
+      "name": "documents.read.chunk",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-00000000000e",
+        "operation": "documents.read.chunk",
+        "payload": {
+          "sessionId": "20000000-0000-4000-8000-000000000005",
+          "index": 3
+        }
+      }
+    },
+    {
+      "name": "documents.delete",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-00000000000f",
+        "operation": "documents.delete",
+        "payload": {
+          "documentId": "20000000-0000-4000-8000-000000000006",
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "applications.list",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000010",
+        "operation": "applications.list",
+        "payload": {}
+      }
+    },
+    {
+      "name": "applications.create with nulls",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000011",
+        "operation": "applications.create",
+        "payload": {
+          "company": "Example Labs",
+          "title": "Engineer",
+          "jobUrl": "https://jobs.example.test/1",
+          "jobId": null,
+          "atsFamily": null,
+          "location": null,
+          "notes": null,
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "applications.update status only",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000012",
+        "operation": "applications.update",
+        "payload": {
+          "id": "20000000-0000-4000-8000-000000000007",
+          "status": "applied",
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "applications.update multiple fields",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000013",
+        "operation": "applications.update",
+        "payload": {
+          "id": "20000000-0000-4000-8000-000000000008",
+          "company": "New Co",
+          "title": "Senior Engineer",
+          "jobUrl": "https://jobs.example.test/2",
+          "jobId": "req-9",
+          "atsFamily": "greenhouse",
+          "location": "Remote",
+          "notes": null,
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "applications.events",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000014",
+        "operation": "applications.events",
+        "payload": {
+          "applicationId": "20000000-0000-4000-8000-000000000009"
+        }
+      }
+    },
+    {
+      "name": "audit.list",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000015",
+        "operation": "audit.list",
+        "payload": {
+          "limit": 10
+        }
+      }
+    },
+    {
+      "name": "audit.undo",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000016",
+        "operation": "audit.undo",
+        "payload": {
+          "auditId": "20000000-0000-4000-8000-00000000000a",
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "diagnostics.list",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000017",
+        "operation": "diagnostics.list",
+        "payload": {}
+      }
+    },
+    {
+      "name": "diagnostics.record with null optionals",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000018",
+        "operation": "diagnostics.record",
+        "payload": {
+          "category": "adapter",
+          "code": "unknown_field",
+          "siteFamily": null,
+          "fieldFingerprint": null,
+          "redactedContext": null
+        }
+      }
+    },
+    {
+      "name": "gmail.status",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000020",
+        "operation": "gmail.status",
+        "payload": {}
+      }
+    },
+    {
+      "name": "gmail.connect",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000021",
+        "operation": "gmail.connect",
+        "payload": {}
+      }
+    },
+    {
+      "name": "gmail.disconnect",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000022",
+        "operation": "gmail.disconnect",
+        "payload": {}
+      }
+    },
+    {
+      "name": "gmail.sync",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000023",
+        "operation": "gmail.sync",
+        "payload": {}
+      }
+    },
+    {
+      "name": "proposals.list",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000024",
+        "operation": "proposals.list",
+        "payload": {
+          "state": "pending"
+        }
+      }
+    },
+    {
+      "name": "proposals.review",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000025",
+        "operation": "proposals.review",
+        "payload": {
+          "id": "20000000-0000-4000-8000-000000000019",
+          "decision": "accept",
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "copilot.status",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000026",
+        "operation": "copilot.status",
+        "payload": {}
+      }
+    },
+    {
+      "name": "copilot.configure",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000027",
+        "operation": "copilot.configure",
+        "payload": {
+          "enabled": false,
+          "preferredModel": "auto"
+        }
+      }
+    },
+    {
+      "name": "backup.list",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000028",
+        "operation": "backup.list",
+        "payload": {}
+      }
+    },
+    {
+      "name": "backup.export with documents",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000029",
+        "operation": "backup.export",
+        "payload": {
+          "password": "correct horse battery staple",
+          "includeDocuments": true
+        }
+      }
+    },
+    {
+      "name": "backup.import.preview",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-00000000002a",
+        "operation": "backup.import.preview",
+        "payload": {
+          "path": "jobseek-backup-20240101-000000-abcdef12.jsabackup",
+          "password": "correct horse battery staple"
+        }
+      }
+    },
+    {
+      "name": "backup.import.apply",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-00000000002b",
+        "operation": "backup.import.apply",
+        "payload": {
+          "path": "jobseek-backup-20240101-000000-abcdef12.jsabackup",
+          "password": "correct horse battery staple",
+          "expectedBackupId": "20000000-0000-4000-8000-00000000002c"
+        }
+      }
+    },
+    {
+      "name": "data.delete profile",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-00000000002d",
+        "operation": "data.delete",
+        "payload": {
+          "category": "profile",
+          "confirmation": "DELETE PROFILE",
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "data.delete all",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-00000000002e",
+        "operation": "data.delete",
+        "payload": {
+          "category": "all",
+          "confirmation": "DELETE ALL LOCAL DATA",
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "application ai status",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000090",
+        "operation": "application.ai.status",
+        "payload": {}
+      }
+    },
+    {
+      "name": "application answer start",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "10000000-0000-4000-8000-000000000091",
+        "operation": "application.answers.start",
+        "payload": {
+          "company": "Example",
+          "domain": "jobs.example.test",
+          "pagePath": "/apply",
+          "questions": [
+            {
+              "ref": "field-1",
+              "question": "Describe experience",
+              "fieldType": "textarea",
+              "required": true,
+              "options": []
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "unknown operation",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000001",
+        "operation": "unknown.execute",
+        "payload": {}
+      }
+    },
+    {
+      "name": "extra top-level field",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000002",
+        "operation": "health.get",
+        "payload": {},
+        "token": "reject"
+      }
+    },
+    {
+      "name": "wrong protocol version",
+      "request": {
+        "protocolVersion": 2,
+        "requestId": "30000000-0000-4000-8000-000000000003",
+        "operation": "health.get",
+        "payload": {}
+      }
+    },
+    {
+      "name": "extra payload field for empty operation",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000004",
+        "operation": "profile.get",
+        "payload": {
+          "unexpected": true
+        }
+      }
+    },
+    {
+      "name": "profile fact nested extra field",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000005",
+        "operation": "profile.update",
+        "payload": {
+          "facts": [
+            {
+              "path": "contact.email",
+              "value": "fake@example.test",
+              "sensitivity": "ordinary",
+              "fillPolicy": "autofill",
+              "source": "test",
+              "confirmed": true,
+              "leak": "reject"
+            }
+          ],
+          "source": "test",
+          "changeSummary": "seed"
+        }
+      }
+    },
+    {
+      "name": "profile fact invalid sensitivity enum",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000006",
+        "operation": "profile.update",
+        "payload": {
+          "facts": [
+            {
+              "path": "contact.email",
+              "value": "fake@example.test",
+              "sensitivity": "secret",
+              "fillPolicy": "autofill",
+              "source": "test",
+              "confirmed": true
+            }
+          ],
+          "source": "test",
+          "changeSummary": "seed"
+        }
+      }
+    },
+    {
+      "name": "applications.create company wrong type",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000007",
+        "operation": "applications.create",
+        "payload": {
+          "company": 42,
+          "title": "Engineer",
+          "jobUrl": null,
+          "jobId": null,
+          "atsFamily": null,
+          "location": null,
+          "notes": null,
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "applications.create invalid jobUrl",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000008",
+        "operation": "applications.create",
+        "payload": {
+          "company": "Example Labs",
+          "title": "Engineer",
+          "jobUrl": "not-a-url",
+          "jobId": null,
+          "atsFamily": null,
+          "location": null,
+          "notes": null,
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "applications.create missing source",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000009",
+        "operation": "applications.create",
+        "payload": {
+          "company": "Example Labs",
+          "title": "Engineer",
+          "jobUrl": null,
+          "jobId": null,
+          "atsFamily": null,
+          "location": null,
+          "notes": null
+        }
+      }
+    },
+    {
+      "name": "answers.update extra payload field",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-00000000000a",
+        "operation": "answers.update",
+        "payload": {
+          "id": "20000000-0000-4000-8000-00000000000b",
+          "answer": "x",
+          "source": "test",
+          "foo": "reject"
+        }
+      }
+    },
+    {
+      "name": "answers.update invalid uuid",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-00000000000b",
+        "operation": "answers.update",
+        "payload": {
+          "id": "not-a-uuid",
+          "answer": "x",
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "answers.confirm invalid fieldType enum",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-00000000000c",
+        "operation": "answers.confirm",
+        "payload": {
+          "rawQuestion": "Do you consent?",
+          "fieldType": "slider",
+          "options": [],
+          "answer": "Yes",
+          "scopeType": "global",
+          "scopeValue": null,
+          "sensitivity": "ordinary",
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "applications.update invalid status enum",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-00000000000d",
+        "operation": "applications.update",
+        "payload": {
+          "id": "20000000-0000-4000-8000-00000000000c",
+          "status": "hired",
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "applications.update no editable field",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-00000000000e",
+        "operation": "applications.update",
+        "payload": {
+          "id": "20000000-0000-4000-8000-00000000000d",
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "audit.list limit below minimum",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-00000000000f",
+        "operation": "audit.list",
+        "payload": {
+          "limit": 0
+        }
+      }
+    },
+    {
+      "name": "diagnostics.record non-nullable category null",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000010",
+        "operation": "diagnostics.record",
+        "payload": {
+          "category": null,
+          "code": "unknown_field",
+          "siteFamily": null,
+          "fieldFingerprint": null,
+          "redactedContext": null
+        }
+      }
+    },
+    {
+      "name": "documents.import.start invalid sha256",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000011",
+        "operation": "documents.import.start",
+        "payload": {
+          "displayName": "resume.pdf",
+          "mimeType": "application/pdf",
+          "sizeBytes": 1024,
+          "sha256": "zz"
+        }
+      }
+    },
+    {
+      "name": "documents.import.chunk negative index",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000012",
+        "operation": "documents.import.chunk",
+        "payload": {
+          "sessionId": "20000000-0000-4000-8000-00000000000e",
+          "index": -1,
+          "dataBase64": "QUJD"
+        }
+      }
+    },
+    {
+      "name": "documents.import.start wrong mimeType literal",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000013",
+        "operation": "documents.import.start",
+        "payload": {
+          "displayName": "resume.pdf",
+          "mimeType": "text/plain",
+          "sizeBytes": 1024,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      }
+    },
+    {
+      "name": "answers.confirm answer missing (required)",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000014",
+        "operation": "answers.confirm",
+        "payload": {
+          "rawQuestion": "Do you consent?",
+          "fieldType": "radio",
+          "options": ["Yes", "No"],
+          "scopeType": "global",
+          "scopeValue": null,
+          "sensitivity": "ordinary",
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "copilot configure extra field",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000015",
+        "operation": "copilot.configure",
+        "payload": {
+          "enabled": true,
+          "preferredModel": "auto",
+          "token": "reject"
+        }
+      }
+    },
+    {
+      "name": "backup.export password too short",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000016",
+        "operation": "backup.export",
+        "payload": {
+          "password": "short",
+          "includeDocuments": false
+        }
+      }
+    },
+    {
+      "name": "backup.export extra field",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000017",
+        "operation": "backup.export",
+        "payload": {
+          "password": "correct horse battery staple",
+          "includeDocuments": false,
+          "outputPath": "C:/reject"
+        }
+      }
+    },
+    {
+      "name": "backup.import.apply missing expectedBackupId",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000018",
+        "operation": "backup.import.apply",
+        "payload": {
+          "path": "jobseek-backup.jsabackup",
+          "password": "correct horse battery staple"
+        }
+      }
+    },
+    {
+      "name": "data.delete invalid category",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-000000000019",
+        "operation": "data.delete",
+        "payload": {
+          "category": "everything",
+          "confirmation": "DELETE ALL LOCAL DATA",
+          "source": "test"
+        }
+      }
+    },
+    {
+      "name": "data.delete missing confirmation",
+      "request": {
+        "protocolVersion": 1,
+        "requestId": "30000000-0000-4000-8000-00000000001a",
+        "operation": "data.delete",
+        "payload": {
+          "category": "profile",
+          "source": "test"
+        }
+      }
+    }
+  ]
+}

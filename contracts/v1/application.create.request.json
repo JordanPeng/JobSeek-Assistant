@@ -1,0 +1,15 @@
+{
+  "protocolVersion": 1,
+  "requestId": "33333333-3333-4333-8333-333333333333",
+  "operation": "applications.create",
+  "payload": {
+    "company": "Example Labs",
+    "title": "Test Engineer",
+    "jobUrl": "https://jobs.example.test/123",
+    "jobId": "example-123",
+    "atsFamily": null,
+    "location": null,
+    "notes": null,
+    "source": "test"
+  }
+}

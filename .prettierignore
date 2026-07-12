@@ -1,0 +1,9 @@
+**/node_modules/**
+**/.wxt/**
+**/.output/**
+**/dist/**
+**/bin/**
+**/obj/**
+**/coverage/**
+**/test-results/**
+**/playwright-report/**

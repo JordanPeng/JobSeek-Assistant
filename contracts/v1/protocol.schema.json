@@ -1,0 +1,1418 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jobseek.local/contracts/v1/protocol.schema.json",
+  "title": "JobSeek Assistant native messaging protocol",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/response"
+    },
+    {
+      "$ref": "#/$defs/request"
+    }
+  ],
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "json": {
+      "type": ["object", "array", "string", "number", "boolean", "null"]
+    },
+    "sensitivity": {
+      "enum": ["ordinary", "explicit_opt_in", "manual"]
+    },
+    "fillPolicy": {
+      "enum": ["autofill", "suggest", "manual"]
+    },
+    "scopeType": {
+      "enum": ["global", "domain", "company"]
+    },
+    "fieldType": {
+      "enum": [
+        "text",
+        "textarea",
+        "email",
+        "phone",
+        "url",
+        "number",
+        "date",
+        "select",
+        "radio",
+        "checkbox"
+      ]
+    },
+    "applicationStatus": {
+      "enum": [
+        "saved",
+        "applied",
+        "assessment",
+        "interview",
+        "offer",
+        "rejected",
+        "withdrawn",
+        "unknown"
+      ]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocolVersion", "requestId", "operation", "payload"],
+      "properties": {
+        "protocolVersion": {
+          "const": 1
+        },
+        "requestId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "operation": {
+          "enum": [
+            "health.get",
+            "profile.get",
+            "profile.update",
+            "profile.history",
+            "answers.list",
+            "answers.confirm",
+            "answers.update",
+            "documents.list",
+            "documents.import.start",
+            "documents.import.chunk",
+            "documents.import.finish",
+            "documents.read.start",
+            "documents.read.chunk",
+            "documents.delete",
+            "applications.list",
+            "applications.create",
+            "applications.update",
+            "applications.events",
+            "audit.list",
+            "audit.undo",
+            "diagnostics.list",
+            "diagnostics.record",
+            "gmail.status",
+            "gmail.connect",
+            "gmail.disconnect",
+            "gmail.sync",
+            "proposals.list",
+            "proposals.review",
+            "copilot.status",
+            "copilot.configure",
+            "backup.export",
+            "backup.import.preview",
+            "backup.import.apply",
+            "backup.list",
+            "data.delete",
+            "answers.confirm-generated",
+            "application.ai.status",
+            "application.ai.configure",
+            "application.answers.start",
+            "application.answers.status"
+          ]
+        },
+        "payload": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "enum": [
+                  "health.get",
+                  "profile.get",
+                  "documents.list",
+                  "applications.list",
+                  "gmail.status",
+                  "gmail.connect",
+                  "gmail.disconnect",
+                  "gmail.sync",
+                  "backup.list",
+                  "application.ai.status"
+                ]
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/emptyPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "profile.update"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/profileUpdatePayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "profile.history"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/profileHistoryPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "answers.list"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/answersListPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "answers.confirm"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/answersConfirmPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "answers.update"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/answersUpdatePayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "documents.import.start"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/importStartPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "documents.import.chunk"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/chunkPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "documents.import.finish"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/sessionPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "documents.read.start"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/documentIdPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "documents.read.chunk"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/readChunkPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "documents.delete"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/documentsDeletePayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "applications.create"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/applicationCreatePayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "applications.update"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/applicationUpdatePayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "applications.events"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/applicationEventsPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "enum": ["audit.list", "diagnostics.list"]
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/limitPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "audit.undo"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/auditUndoPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "diagnostics.record"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/diagnosticsRecordPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "proposals.list"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/proposalsListPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "proposals.review"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/proposalsReviewPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "copilot.status"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "refreshModels": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "copilot.configure"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["enabled", "preferredModel"],
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "preferredModel": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "backup.export"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/backupExportPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "backup.import.preview"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/backupImportPreviewPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "backup.import.apply"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/backupImportApplyPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "data.delete"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/dataDeletePayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "answers.confirm-generated"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/confirmGeneratedPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "application.ai.configure"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/applicationAiConfigurePayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "application.answers.start"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/applicationAnswersStartPayload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "application.answers.status"
+              }
+            },
+            "required": ["operation"]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/jobIdPayload"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "emptyPayload": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "profileUpdatePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["facts", "source", "changeSummary"],
+      "properties": {
+        "facts": {
+          "type": "array",
+          "maxItems": 500,
+          "items": {
+            "$ref": "#/$defs/profileFact"
+          }
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "changeSummary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        }
+      }
+    },
+    "profileFact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "value",
+        "sensitivity",
+        "fillPolicy",
+        "source",
+        "confirmed"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "value": {
+          "$ref": "#/$defs/json"
+        },
+        "sensitivity": {
+          "$ref": "#/$defs/sensitivity"
+        },
+        "fillPolicy": {
+          "$ref": "#/$defs/fillPolicy"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "confirmed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profileHistoryPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "answersListPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "activeOnly": {
+          "type": "boolean"
+        }
+      }
+    },
+    "answersConfirmPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rawQuestion",
+        "fieldType",
+        "options",
+        "answer",
+        "scopeType",
+        "scopeValue",
+        "sensitivity",
+        "source"
+      ],
+      "properties": {
+        "rawQuestion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "fieldType": {
+          "$ref": "#/$defs/fieldType"
+        },
+        "options": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          }
+        },
+        "answer": {
+          "$ref": "#/$defs/json"
+        },
+        "scopeType": {
+          "$ref": "#/$defs/scopeType"
+        },
+        "scopeValue": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "sensitivity": {
+          "$ref": "#/$defs/sensitivity"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      }
+    },
+    "answersUpdatePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "answer", "source"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "answer": {
+          "$ref": "#/$defs/json"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      }
+    },
+    "importStartPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["displayName", "mimeType", "sizeBytes", "sha256"],
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "mimeType": {
+          "const": "application/pdf"
+        },
+        "sizeBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10485760
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "chunkPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sessionId", "index", "dataBase64"],
+      "properties": {
+        "sessionId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dataBase64": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 440000,
+          "contentEncoding": "base64"
+        }
+      }
+    },
+    "sessionPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sessionId"],
+      "properties": {
+        "sessionId": {
+          "$ref": "#/$defs/uuid"
+        }
+      }
+    },
+    "documentIdPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["documentId"],
+      "properties": {
+        "documentId": {
+          "$ref": "#/$defs/uuid"
+        }
+      }
+    },
+    "readChunkPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sessionId", "index"],
+      "properties": {
+        "sessionId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "documentsDeletePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["documentId", "source"],
+      "properties": {
+        "documentId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      }
+    },
+    "applicationCreatePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "company",
+        "title",
+        "jobUrl",
+        "jobId",
+        "atsFamily",
+        "location",
+        "notes",
+        "source"
+      ],
+      "properties": {
+        "company": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "jobUrl": {
+          "type": ["string", "null"],
+          "format": "uri",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "jobId": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "atsFamily": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "location": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "status": {
+          "$ref": "#/$defs/applicationStatus"
+        },
+        "notes": {
+          "type": ["string", "null"],
+          "maxLength": 10000
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      }
+    },
+    "applicationUpdatePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source"],
+      "anyOf": [
+        {
+          "required": ["company"]
+        },
+        {
+          "required": ["title"]
+        },
+        {
+          "required": ["jobUrl"]
+        },
+        {
+          "required": ["jobId"]
+        },
+        {
+          "required": ["atsFamily"]
+        },
+        {
+          "required": ["location"]
+        },
+        {
+          "required": ["status"]
+        },
+        {
+          "required": ["notes"]
+        }
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "company": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "jobUrl": {
+          "type": ["string", "null"],
+          "format": "uri",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "jobId": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "atsFamily": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "location": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "status": {
+          "$ref": "#/$defs/applicationStatus"
+        },
+        "notes": {
+          "type": ["string", "null"],
+          "maxLength": 10000
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      }
+    },
+    "applicationEventsPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["applicationId"],
+      "properties": {
+        "applicationId": {
+          "$ref": "#/$defs/uuid"
+        }
+      }
+    },
+    "limitPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      }
+    },
+    "auditUndoPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["auditId", "source"],
+      "properties": {
+        "auditId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      }
+    },
+    "diagnosticsRecordPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "category",
+        "code",
+        "siteFamily",
+        "fieldFingerprint",
+        "redactedContext"
+      ],
+      "properties": {
+        "category": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "siteFamily": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "fieldFingerprint": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "redactedContext": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 500
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocolVersion", "requestId", "ok"],
+      "properties": {
+        "protocolVersion": {
+          "const": 1
+        },
+        "requestId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "ok": {
+          "type": "boolean"
+        },
+        "result": {},
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code", "message"],
+          "properties": {
+            "code": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            }
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "ok": {
+              "const": true
+            }
+          },
+          "required": ["result"],
+          "not": {
+            "required": ["error"]
+          }
+        },
+        {
+          "properties": {
+            "ok": {
+              "const": false
+            }
+          },
+          "required": ["error"],
+          "not": {
+            "required": ["result"]
+          }
+        }
+      ]
+    },
+    "proposalsListPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": ["pending", "accepted", "rejected"]
+        }
+      }
+    },
+    "proposalsReviewPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "decision", "source"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "decision": {
+          "enum": ["accept", "reject"]
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      }
+    },
+    "backupExportPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["password", "includeDocuments"],
+      "properties": {
+        "password": {
+          "type": "string",
+          "minLength": 12,
+          "maxLength": 256
+        },
+        "includeDocuments": {
+          "type": "boolean"
+        }
+      }
+    },
+    "backupImportPreviewPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "password"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "password": {
+          "type": "string",
+          "minLength": 12,
+          "maxLength": 256
+        }
+      }
+    },
+    "backupImportApplyPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "password", "expectedBackupId"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "password": {
+          "type": "string",
+          "minLength": 12,
+          "maxLength": 256
+        },
+        "expectedBackupId": {
+          "$ref": "#/$defs/uuid"
+        }
+      }
+    },
+    "dataDeletePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["category", "confirmation", "source"],
+      "properties": {
+        "category": {
+          "enum": [
+            "profile",
+            "answers",
+            "documents",
+            "applications",
+            "gmail_evidence",
+            "diagnostics",
+            "activity",
+            "all"
+          ]
+        },
+        "confirmation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      }
+    },
+    "applicationQuestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "question", "fieldType", "required", "options"],
+      "properties": {
+        "ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "fieldType": {
+          "enum": [
+            "text",
+            "textarea",
+            "select",
+            "radio",
+            "checkbox",
+            "combobox",
+            "listbox"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "options": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "value"],
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300
+              }
+            }
+          }
+        }
+      }
+    },
+    "applicationAnswersStartPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["company", "domain", "pagePath", "questions"],
+      "properties": {
+        "company": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "domain": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "pagePath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "questions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10,
+          "items": {
+            "$ref": "#/$defs/applicationQuestion"
+          }
+        }
+      }
+    },
+    "applicationAiConfigurePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "consentGranted",
+        "preferredModel",
+        "reasoningEffort"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "consentGranted": {
+          "type": "boolean"
+        },
+        "preferredModel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "reasoningEffort": {
+          "const": "high"
+        }
+      }
+    },
+    "confirmGeneratedPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      }
+    },
+    "jobIdPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["jobId"],
+      "properties": {
+        "jobId": {
+          "$ref": "#/$defs/uuid"
+        }
+      }
+    }
+  }
+}

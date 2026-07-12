@@ -1,0 +1,493 @@
+:root {
+  color: #1d2939;
+  background: #f7f8fa;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+.dashboard {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  border-bottom: 1px solid #d0d5dd;
+  padding-bottom: 16px;
+}
+.topbar h1,
+h2,
+h3 {
+  margin: 0;
+  color: #101828;
+}
+.topbar p,
+.panel > section > p,
+.status,
+small {
+  color: #667085;
+}
+.topbar p {
+  margin: 4px 0 0;
+}
+.connection {
+  margin: 14px 0;
+  padding: 9px 11px;
+  border: 1px solid #d0d5dd;
+  background: #fff;
+  font-size: 14px;
+}
+.connection-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+  background: #98a2b3;
+}
+.connection.connected .connection-dot {
+  background: #12b76a;
+}
+.connection.unavailable .connection-dot {
+  background: #f04438;
+}
+.workspace {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 24px;
+}
+.tabs {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+}
+.tabs button {
+  text-align: left;
+  padding: 9px 10px;
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+  color: #475467;
+  font: inherit;
+  cursor: pointer;
+}
+.tabs button[aria-selected="true"] {
+  background: #eaf0fb;
+  color: #175cd3;
+  font-weight: 600;
+}
+.panel {
+  min-width: 0;
+  background: #fff;
+  border: 1px solid #d0d5dd;
+  padding: 20px;
+}
+.panel h2 {
+  font-size: 19px;
+}
+.panel h3 {
+  font-size: 15px;
+  margin-top: 24px;
+}
+.panel p {
+  font-size: 14px;
+  line-height: 1.45;
+}
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.primary {
+  background: #175cd3;
+  color: #fff;
+  border: 1px solid #175cd3;
+  border-radius: 5px;
+  padding: 8px 11px;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 14px;
+}
+.icon-button {
+  border: 0;
+  background: transparent;
+  padding: 6px;
+  color: #475467;
+}
+.toolbar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px 0;
+}
+.upload {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  border: 1px solid #98a2b3;
+  border-radius: 5px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.upload input {
+  max-width: 220px;
+}
+progress {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+}
+details {
+  margin: 12px 0;
+}
+pre {
+  white-space: pre-wrap;
+  max-height: 260px;
+  overflow: auto;
+  background: #f9fafb;
+  padding: 10px;
+  font:
+    12px/1.45 ui-monospace,
+    monospace;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+th {
+  text-align: left;
+  color: #475467;
+  font-weight: 600;
+  background: #f9fafb;
+}
+th,
+td {
+  border-bottom: 1px solid #eaecf0;
+  padding: 8px;
+  vertical-align: top;
+}
+td input,
+td textarea,
+td select {
+  width: 100%;
+}
+td textarea {
+  min-height: 46px;
+}
+small {
+  display: block;
+  font-size: 11px;
+  margin-top: 3px;
+}
+.history,
+.timeline {
+  padding-left: 20px;
+  font-size: 13px;
+}
+.history li,
+.timeline li {
+  margin: 6px 0;
+}
+.review-list {
+  display: grid;
+  gap: 5px;
+}
+.review-list button {
+  border: 1px solid #d0d5dd;
+  background: #fff;
+  text-align: left;
+  padding: 7px;
+  display: flex;
+  align-items: center;
+}
+.review-list button.selected,
+.selected-row {
+  background: #f0f6ff;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.form-grid label,
+.toggle {
+  display: grid;
+  gap: 5px;
+  color: #344054;
+  font-size: 13px;
+}
+.form-grid input,
+.form-grid textarea,
+.form-grid select,
+.toolbar select {
+  border: 1px solid #98a2b3;
+  border-radius: 4px;
+  padding: 6px;
+  background: #fff;
+}
+.form-grid textarea {
+  min-height: 72px;
+}
+.wide {
+  grid-column: 1/-1;
+}
+.toggle {
+  margin: 14px 0;
+}
+.toggle input {
+  justify-self: start;
+}
+.warning {
+  border-left: 3px solid #f79009;
+  padding-left: 9px;
+}
+.status {
+  font-size: 13px;
+  margin: 16px 0;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+@media (max-width: 760px) {
+  .dashboard {
+    padding: 12px;
+  }
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+  .tabs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .panel {
+    padding: 14px;
+  }
+  .toolbar {
+    align-items: start;
+    flex-direction: column;
+  }
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+.preparation-queue {
+  margin-top: 28px;
+  border-top: 1px solid #d0d5dd;
+  padding-top: 16px;
+}
+.preparation-queue h2 {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 17px;
+}
+.preparation-queue .boundary {
+  background: #fff8ec;
+  border-left: 3px solid #f79009;
+  padding: 9px 11px;
+  font-size: 13px;
+}
+.prep-url {
+  max-width: 220px;
+  word-break: break-all;
+  color: #475467;
+  font-size: 12px;
+}
+.prep-status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #f2f4f7;
+  color: #344054;
+}
+.prep-prepared {
+  background: #e7f6ec;
+  color: #027a48;
+}
+.prep-needs_review,
+.prep-needs_permission {
+  background: #fef0c7;
+  color: #b54708;
+}
+.prep-blocked,
+.prep-failed {
+  background: #fee4e2;
+  color: #b42318;
+}
+.prep-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.prep-actions button {
+  border: 1px solid #d0d5dd;
+  background: #fff;
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-size: 12px;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+.prep-actions .icon-button {
+  border: 0;
+}
+.inbox-updates code {
+  font:
+    12px ui-monospace,
+    monospace;
+  color: #175cd3;
+}
+.gmail-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 16px 0;
+}
+.gmail-status div {
+  border: 1px solid #d0d5dd;
+  padding: 7px 10px;
+  min-width: 130px;
+}
+.gmail-status dt {
+  font-size: 11px;
+  color: #667085;
+}
+.gmail-status dd {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #101828;
+}
+.inbox-updates .prep-actions {
+  margin: 12px 0;
+}
+/* Optional Copilot status stays visually subordinate to the safety controls. */
+.settings-status {
+  color: var(--muted, #5a6472);
+  font-size: 0.9rem;
+}
+
+/* Encrypted backup and deletion controls in Settings. */
+.data-backup,
+.data-delete {
+  margin-top: 28px;
+  border-top: 1px solid #d0d5dd;
+  padding-top: 18px;
+}
+.backup-block {
+  margin: 16px 0;
+  padding: 14px;
+  border: 1px solid #e4e7ec;
+  border-radius: 8px;
+}
+.backup-block h3 {
+  margin-bottom: 8px;
+}
+.backup-block label,
+.data-delete label {
+  display: block;
+  margin: 10px 0;
+}
+.backup-block input[type="password"],
+.backup-block input[type="text"],
+.backup-preview input[type="text"],
+.delete-confirm input[type="text"] {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  margin-top: 4px;
+  padding: 7px 9px;
+  border: 1px solid #d0d5dd;
+  border-radius: 5px;
+}
+.backup-list {
+  list-style: none;
+  margin: 8px 0;
+  padding: 0;
+}
+.backup-list li {
+  padding: 4px 0;
+}
+.backup-preview {
+  margin-top: 12px;
+  padding: 12px;
+  background: #f2f4f7;
+  border-radius: 6px;
+}
+.backup-warnings {
+  margin: 8px 0;
+  padding-left: 18px;
+  color: #b54708;
+}
+.delete-list {
+  list-style: none;
+  margin: 12px 0;
+  padding: 0;
+}
+.delete-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eaecf0;
+}
+.delete-list li small {
+  display: block;
+  color: #5a6472;
+  font-size: 0.85rem;
+}
+.delete-list li.danger strong {
+  color: #b42318;
+}
+.delete-confirm {
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid #fda29b;
+  background: #fef3f2;
+  border-radius: 8px;
+}
+.delete-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+button.danger {
+  background: #d92d20;
+  color: #fff;
+  border: 1px solid #d92d20;
+  border-radius: 5px;
+  padding: 8px 11px;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}

@@ -1,0 +1,41 @@
+# JavaScript / WXT / Playwright
+node_modules/
+**/node_modules/
+**/.wxt/
+**/.output/
+**/dist/
+**/coverage/
+**/test-results/
+**/playwright-report/
+e2e/browser-profiles/
+/npm-audit-*.json
+
+# .NET
+**/bin/
+**/obj/
+*.user
+
+# Local credentials and environment
+client_secret_*.json
+google-oauth-client.json
+.env
+.env.*
+!.env.example
+
+# Runtime state
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+/vault/
+/data/
+/logs/
+/exports/
+**/browser-profiles/
+
+# Editors / OS
+.vs/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
